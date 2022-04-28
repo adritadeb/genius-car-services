@@ -7,6 +7,7 @@ import SocialLogin from '../SocialLogin/SocialLogin';
 import Loading from '../../Shared/Loading/Loading';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import PageTitle from '../../Shared/PageTitle/PageTitle';
 
 const Login = () => {
     const emailRef = useRef('');
@@ -58,6 +59,7 @@ const Login = () => {
 
     return (
         <div className='container w-50 mx-auto'>
+            <PageTitle title='Login'></PageTitle>
             <h2 className='text-primary text-center'>Please Login</h2>
             <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -72,7 +74,7 @@ const Login = () => {
             </Form>
             {errorElement}
             <p>New to Genius Car? <Link to='/register' className='text-primary pe-auto text-decoration-none'>Please Register</Link></p>
-            <p>Forget Password? <button onClick={resetPassword} className='btn btn-link text-primary pe-auto text-decoration-none'>Reset Password</button></p>
+            <p>Forget Password?<button onClick={resetPassword} className='btn btn-link text-primary pe-auto text-decoration-none'>Reset Password</button></p>
             <SocialLogin></SocialLogin>
             <ToastContainer />
         </div>

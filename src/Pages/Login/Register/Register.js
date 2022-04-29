@@ -5,17 +5,17 @@ import auth from '../../../firebase.init';
 import { Link, useNavigate } from 'react-router-dom';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import Loading from '../../Shared/Loading/Loading';
+import useToken from '../../../hooks/useToken';
 
 const Register = () => {
     const [agree, setAgree] = useState(false);
     const [
         createUserWithEmailAndPassword,
         user,
-        loading,
-        error
+        loading
     ] = useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
-    const [updateProfile, updating, updateError] = useUpdateProfile(auth);
-
+    const [updateProfile, updating] = useUpdateProfile(auth);
+    const [token] = useToken(user);
     const navigate = useNavigate();
 
     if (loading || updating) {
@@ -31,9 +31,11 @@ const Register = () => {
         await createUserWithEmailAndPassword(email, password);
         await updateProfile({ displayName: name });
         alert('Updated profile');
-        navigate('/home');
     }
 
+    if (token) {
+        navigate('/home');
+    }
     return (
         <div className='register-form'>
             <h2 className='text-center '>Please Register</h2>

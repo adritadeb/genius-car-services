@@ -5,6 +5,7 @@ import { useSignInWithEmailAndPassword, useSendPasswordResetEmail } from 'react-
 import auth from '../../../firebase.init';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import SocialLogin from '../SocialLogin/SocialLogin';
+import useToken from '../../../hooks/useToken';
 import Loading from '../../Shared/Loading/Loading';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -23,9 +24,9 @@ const Login = () => {
     ] = useSignInWithEmailAndPassword(auth);
 
     const [sendPasswordResetEmail, sending] = useSendPasswordResetEmail(auth);
-
     const navigate = useNavigate();
     let errorElement;
+    const [token] = useToken(user);
 
     if (loading || sending) {
         return <Loading></Loading>
@@ -43,7 +44,6 @@ const Login = () => {
         await signInWithEmailAndPassword(email, password);
         const { data } = await axios.post('https://secret-crag-79435.herokuapp.com/login', { email });
         localStorage.setItem('accessToken', data.accessToken);
-        navigate(from, { replace: true });
     }
 
     const resetPassword = async () => {
@@ -57,8 +57,8 @@ const Login = () => {
         }
     }
 
-    if (user) {
-        // navigate(from, { replace: true });
+    if (token) {
+        navigate(from, { replace: true });
     }
 
     return (

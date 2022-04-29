@@ -11,7 +11,7 @@ const Order = () => {
     const navigate = useNavigate();
     useEffect(() => {
         const getOrders = async () => {
-            const email = user.email;
+            const email = user?.email;
             const url = `https://secret-crag-79435.herokuapp.com/order?email=${email}`;
             try {
                 const { data } = await axios.get(url, {
